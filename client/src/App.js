@@ -10,10 +10,10 @@ function App () {
     <Router>
       <Nav />
       <Switch>
-        <Route exact path={['/', '/books']}>
+        <Route exact path='/'>
           <Search />
         </Route>
-        <Route exact path='/books/:id'>
+        <Route exact path='/saved'>
           <Saved />
         </Route>
         <Route>
