@@ -57,38 +57,26 @@ function Search () {
   return (
     <Container fluid>
       <Row>
-        <Col size='md-6'>
+        <Col size='sm-12'>
           <Jumbotron>
-            <h1>What Books Should I Read?</h1>
+            <h1>What Books Should I Search?</h1>
           </Jumbotron>
           <form>
             <Input
               onChange={handleInputChange}
-              name='title'
-              placeholder='Title (required)'
-            />
-            <Input
-              onChange={handleInputChange}
-              name='author'
-              placeholder='Author (required)'
-            />
-            <TextArea
-              onChange={handleInputChange}
-              name='synopsis'
-              placeholder='Synopsis (Optional)'
+              name='search'
+              placeholder='Search'
             />
             <FormBtn
-              disabled={!(formObject.author && formObject.title)}
+              disabled={!(formObject.search)}
               onClick={handleFormSubmit}
             >
               Submit Book
             </FormBtn>
           </form>
         </Col>
-        <Col size='md-6 sm-12'>
-          <Jumbotron>
-            <h1>Books On My List</h1>
-          </Jumbotron>
+        <Col size='sm-12'>
+          <h1>Found</h1>
           {books.length
             ? (
               <List>
