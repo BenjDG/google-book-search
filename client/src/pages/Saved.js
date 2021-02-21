@@ -5,27 +5,43 @@ import Jumbotron from '../components/Jumbotron';
 import API from '../utils/API';
 
 function Saved () {
-  const [book, setBook] = useState([]);
+  const [books, setBooks] = useState([]);
 
   // When this component mounts, grab the book with the _id of props.match.params.id
   // e.g. localhost:3000/books/599dcb67f0f16317844583fc
   useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = () => {
     API.getBooks()
       .then(res => {
-        console.log(res.data);
-        setBook(res.data);
-        console.log(book);
+        setBooks(res.data);
       })
       .catch(err => console.log(err));
-  }, [book]);
-
+  };
   return (
     <Container fluid>
       <Row>
         <Col size='md-12'>
           <Jumbotron>
             <h1>
-              {/* {book[0].title} by {book[0].authors[0]} */}
+              {console.log('Pleeeeeeeeeeeeeeeeeeeeeeeeeease work')}
+              {console.log(books)}
+              {books.length
+                ? (
+                  <div>
+                    {books.map(book => (
+                      <div key={book._id}>
+                        {book.title} by {book.authors[0]}
+                      </div>
+                    ))}
+                  </div>
+                  )
+                : (
+                  <p>No Results</p>
+                  )}
+
             </h1>
           </Jumbotron>
         </Col>
