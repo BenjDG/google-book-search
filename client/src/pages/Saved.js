@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row, Container } from '../components/Grid';
-import Jumbotron from '../components/Jumbotron';
 import API from '../utils/API';
 
 function Saved () {
@@ -24,36 +23,34 @@ function Saved () {
     <Container fluid>
       <Row>
         <Col size='md-12'>
-          <Jumbotron>
-            <h1>
-              {console.log('Pleeeeeeeeeeeeeeeeeeeeeeeeeease work')}
-              {console.log(books)}
-              {books.length
-                ? (
-                  <div>
-                    {books.map(book => (
-                      <div key={book._id}>
-                        {book.title} by {book.authors[0]}
-                      </div>
-                    ))}
-                  </div>
-                  )
-                : (
-                  <p>No Results</p>
-                  )}
+          {books.length
+            ? (
+              <div>
+                {books.map(book => (
+                  <div className='card' key={book._id}>
+                    <div className='card-body'>
+                      <h3>{book.title} by {book.authors.length > 1
+                        ? (
+                          <div>
+                            {book.authors.map((author, idx) => (
+                              <div key={idx}>{author + ' '}</div>
+                            ))}
+                          </div>
 
-            </h1>
-          </Jumbotron>
-        </Col>
-      </Row>
-      <Row>
-        <Col size='md-10 md-offset-1'>
-          <article>
-            <h1>Synopsis</h1>
-            <p>
-              {/* {book[0].description} */}
-            </p>
-          </article>
+                          )
+                        : (
+                          <div>{book.authors[0]}</div>
+                          )}
+                      </h3>
+                      <p>{book.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              )
+            : (
+              <p>No Results</p>
+              )}
         </Col>
       </Row>
       <Row>
