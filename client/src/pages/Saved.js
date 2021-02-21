@@ -14,9 +14,10 @@ function Saved () {
       .then(res => {
         console.log(res.data);
         setBook(res.data);
+        console.log(book);
       })
       .catch(err => console.log(err));
-  }, []);
+  }, [book]);
 
   return (
     <Container fluid>
@@ -24,7 +25,7 @@ function Saved () {
         <Col size='md-12'>
           <Jumbotron>
             <h1>
-              {book[0].title} by {book[0].authors[0]}
+              {/* {book[0].title} by {book[0].authors[0]} */}
             </h1>
           </Jumbotron>
         </Col>
@@ -41,7 +42,7 @@ function Saved () {
       </Row>
       <Row>
         <Col size='md-2'>
-          <Link to='/'>← Back to Authors</Link>
+          <Link to='/'>← Back to Search</Link>
         </Col>
       </Row>
     </Container>
