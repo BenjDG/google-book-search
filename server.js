@@ -13,8 +13,6 @@ app.use(morgan('tiny'));
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
-} else {
-  
 }
 
 // Define API routes here
