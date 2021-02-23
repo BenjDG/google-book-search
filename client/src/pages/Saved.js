@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import DeleteBtn from '../components/DeleteBtn';
 import { Col, Row, Container } from '../components/Grid';
 import { ListItem } from '../components/List';
 import API from '../utils/API';
@@ -20,6 +21,13 @@ function Saved () {
       })
       .catch(err => console.log(err));
   };
+
+  function deleteBook (id) {
+    API.deleteBook(id)
+      .then(res => loadData())
+      .catch(err => console.log(err));
+  }
+
   return (
     <Container fluid>
       <Row>
@@ -43,9 +51,8 @@ function Saved () {
                         </strong>
                       </a>
                       <p>{book.description}</p>
+                      <DeleteBtn onClick={() => deleteBook(book._id)} />
                     </div>
-                    <button type='button' className='btn' value={book.id}>Delete</button>
-                    {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
                   </ListItem>
                 ))}
               </div>
