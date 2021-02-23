@@ -94,7 +94,6 @@ function Search () {
                       <p>{book.description}</p>
                     </div>
                     <button type='button' className='btn' onClick={handleSave} value={book.id}>Save</button>
-                    {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
                   </ListItem>
                 ))}
               </List>
