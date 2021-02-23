@@ -58,19 +58,25 @@ function Search () {
       <Row>
         <Col size='sm-12'>
           <form>
-            <Input
-              onChange={handleInputChange}
-              name='search'
-              placeholder='Search'
-            />
-            <FormBtn
-              disabled={!(input)}
-              onClick={handleFormSubmit}
-            >
-              Search
-            </FormBtn>
+            <div className='form-group m-2'>
+              <Input
+                onChange={handleInputChange}
+                name='search'
+                placeholder='Search'
+              />
+              <div className='p-2'>
+                <FormBtn
+                  disabled={!(input)}
+                  onClick={handleFormSubmit}
+                >
+                  Search
+                </FormBtn>
+              </div>
+            </div>
           </form>
         </Col>
+      </Row>
+      <Row>
         <Col size='sm-12'>
           <h1>Found</h1>
           {result.length
