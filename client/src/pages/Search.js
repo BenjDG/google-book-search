@@ -17,7 +17,6 @@ function Search () {
   function searchBooks (searched) {
     API.searchGoogleBooks(searched)
       .then(res => {
-        // console.log(res.data.items);
         const arr = res.data.items;
         const resultArr = arr.map(object => {
           const {
@@ -28,12 +27,10 @@ function Search () {
             volumeInfo: { imageLinks: { smallThumbnail } },
             volumeInfo: { infoLink }
           } = object;
-
           return { id, title, authors, description, smallThumbnail, infoLink };
         });
         return resultArr;
       }).then((data) => {
-        // console.log(data);
         setResult(data);
       })
       .catch(err => console.log(err));
@@ -59,20 +56,14 @@ function Search () {
     }
   }
 
-  // When the form is submitted, use the API.saveBook method to save the book data
-  // Then reload books from the database
-  // function handleFormSubmit (event) {
-  //   event.preventDefault();
-  //   if (formObject.title && formObject.author) {
-  //     API.saveBook({
-  //       title: formObject.title,
-  //       author: formObject.author,
-  //       synopsis: formObject.synopsis
-  //     })
-  //       .then(res => loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // }
+  function handleSave (event) {
+    console.log(event.target.value);
+    const saveIt = result.filter(bookObject => event.target.value === bookObject.id);
+    console.log('########################');
+    console.log(saveIt[0]);
+    API.saveBook(saveIt[0])
+      .catch(err => console.log(err));
+  }
 
   return (
     <Container fluid>
@@ -88,7 +79,7 @@ function Search () {
               disabled={!(input)}
               onClick={handleFormSubmit}
             >
-              Submit Book
+              Search
             </FormBtn>
           </form>
         </Col>
@@ -99,17 +90,22 @@ function Search () {
               <List>
                 {result.map(book => (
                   <ListItem key={book.id}>
-                    <a href={book.infoLink} target='_blank' rel='noopener noreferrer'>
-                      <strong>
-                        {book.title}{book.authors
-                          ? (
-                            <span> by {book.authors.map((a, idx) => (
-                              <div key={idx}>{a} </div>
-                            ))}
-                            </span>)
-                          : null}
-                      </strong>
-                    </a>
+                    <img src={book.smallThumbnail} alt={book.title} />
+                    <div>
+                      <a href={book.infoLink} target='_blank' rel='noopener noreferrer'>
+                        <strong>
+                          {book.title}{book.authors
+                            ? (
+                              <span> by {book.authors.map((a, idx) => (
+                                <div key={idx}>{a} </div>
+                              ))}
+                              </span>)
+                            : null}
+                        </strong>
+                      </a>
+                      <p>{book.description}</p>
+                    </div>
+                    <button type='button' className='btn' onClick={handleSave} value={book.id}>Save</button>
                     {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
                   </ListItem>
                 ))}

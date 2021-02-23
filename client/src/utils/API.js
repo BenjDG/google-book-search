@@ -14,6 +14,7 @@ const API = {
   },
   // Saves a book to the database
   saveBook: function (bookData) {
+    console.log('API saveBook fired');
     return axios.post('/api/books', bookData);
   }
 };

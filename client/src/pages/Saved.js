@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Col, Row, Container } from '../components/Grid';
+import { ListItem } from '../components/List';
 import API from '../utils/API';
 
 function Saved () {
@@ -27,24 +28,25 @@ function Saved () {
             ? (
               <div>
                 {books.map(book => (
-                  <div className='card' key={book._id}>
-                    <div className='card-body'>
-                      <h3>{book.title} by {book.authors.length > 1
-                        ? (
-                          <div>
-                            {book.authors.map((author, idx) => (
-                              <div key={idx}>{author + ' '}</div>
-                            ))}
-                          </div>
-
-                          )
-                        : (
-                          <div>{book.authors[0]}</div>
-                          )}
-                      </h3>
+                  <ListItem key={book._id}>
+                    <img src={book.smallThumbnail} alt={book.title} />
+                    <div>
+                      <a href={book.infoLink} target='_blank' rel='noopener noreferrer'>
+                        <strong>
+                          {book.title}{book.authors
+                            ? (
+                              <span> by {book.authors.map((a, idx) => (
+                                <div key={idx}>{a} </div>
+                              ))}
+                              </span>)
+                            : null}
+                        </strong>
+                      </a>
                       <p>{book.description}</p>
                     </div>
-                  </div>
+                    <button type='button' className='btn' value={book.id}>Delete</button>
+                    {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
+                  </ListItem>
                 ))}
               </div>
               )
