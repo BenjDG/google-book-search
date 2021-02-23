@@ -101,9 +101,13 @@ function Search () {
                   <ListItem key={book.id}>
                     <a href={book.infoLink} target='_blank' rel='noopener noreferrer'>
                       <strong>
-                        {book.title} by {book.authors && book.authors.map((a, idx) => (
-                          <div key={idx}>{a}</div>
-                        ))}
+                        {book.title}{book.authors
+                          ? (
+                            <span> by {book.authors.map((a, idx) => (
+                              <div key={idx}>{a} </div>
+                            ))}
+                            </span>)
+                          : null}
                       </strong>
                     </a>
                     {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
