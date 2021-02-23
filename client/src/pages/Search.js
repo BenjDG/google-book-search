@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import DeleteBtn from '../components/DeleteBtn';
+// import DeleteBtn from '../components/DeleteBtn';
 import API from '../utils/API';
-import { Link } from 'react-router-dom';
 import { Col, Row, Container } from '../components/Grid';
 import { List, ListItem } from '../components/List';
 import { Input, FormBtn } from '../components/Form';
 
 function Search () {
-  // Setting our component's initial state
-  const [searched, setSearched] = useState('');
-  const [result, setResult] = useState([]);
-  const [input, setInput] = useState('');
+  const [searched, setSearched] = useState(''); // word sent to search API
+  const [result, setResult] = useState([]); // data returned from search API
+  const [input, setInput] = useState(''); // search handle change
 
-  // Load all books and store them with setBooks
   useEffect(() => {
     searchBooks(searched);
   }, [searched]);
 
-  // Loads all books and sets them to books
-  // Start here ##########################################################################################################
   function searchBooks (searched) {
     API.searchGoogleBooks(searched)
       .then(res => {
-        const temp = [];
-        console.log(res.data.items);
+        // console.log(res.data.items);
         const arr = res.data.items;
-        arr.map(object => {
-          const { id, volumeInfo.title, volumeInto.authors[], volumeInfo.description, volumeInfo.imageLinks.smallThumbnail, volumeInfo.infoLink  } = object;
-          return
-        });
+        const resultArr = arr.map(object => {
+          const {
+            id,
+            volumeInfo: { title },
+            volumeInfo: { authors }, // array
+            volumeInfo: { description },
+            volumeInfo: { imageLinks: { smallThumbnail } },
+            volumeInfo: { infoLink }
+          } = object;
 
-        // setResult(res.data)
+          return { id, title, authors, description, smallThumbnail, infoLink };
+        });
+        return resultArr;
+      }).then((data) => {
+        // console.log(data);
+        setResult(data);
       })
       .catch(err => console.log(err));
   }
@@ -94,12 +98,14 @@ function Search () {
             ? (
               <List>
                 {result.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={'/books/' + book._id}>
+                  <ListItem key={book.id}>
+                    <a href={book.infoLink} target='_blank' rel='noopener noreferrer'>
                       <strong>
-                        {book.title} by {book.author}
+                        {book.title} by {book.authors && book.authors.map((a, idx) => (
+                          <div key={idx}>{a}</div>
+                        ))}
                       </strong>
-                    </Link>
+                    </a>
                     {/* <DeleteBtn onClick={() => deleteBook(book._id)} /> */}
                   </ListItem>
                 ))}
