@@ -48,6 +48,7 @@ function Search () {
   }
 
   function handleSave (event) {
+    window.alert('Saving');
     const saveIt = result.filter(bookObject => event.target.value === bookObject.id);
     API.saveBook(saveIt[0])
       .catch(err => console.log(err));
@@ -99,7 +100,7 @@ function Search () {
                       </a>
                       <p>{book.description}</p>
                     </div>
-                    <button type='button' className='btn' onClick={handleSave} value={book.id}>Save</button>
+                    <button type='button' className='btn btn-primary' onClick={handleSave} value={book.id}>Save</button>
                   </ListItem>
                 ))}
               </List>
